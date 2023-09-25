@@ -2,7 +2,6 @@ import streamlit as st
 
 #page config
 
-
 st.set_page_config(page_title="Pizza Bakery", page_icon = ":pizza:")
 st.title("Papa's Pizzeria - Walmart Edition")
 st.header("Menu || Plain Pizzas cost 3 coins.")
@@ -16,106 +15,81 @@ st.write("(5) Pineapple costs 2 coins.")
 st.header("Place Your Order")
 
 #base pizza
-number_of_pizzas  = st.number_input("How many pizzas do you want?", step=1)
-if number_of_pizzas<0:
-    st.write("You want...less than 1 pizza-? A negative pizza? STOP TORMENTING OUR WAITERS!")
-    fornow1 = 0
-    fornow2 = 0
-    fornow3 = 0
-    fornow4 = 0
-if number_of_pizzas == 0:
-    st.write("why are you even here?")
-if number_of_pizzas>30:
+number_of_pizzas  = st.number_input("How many pizzas do you want?", min_value = 0, step=1)
+fornow1 = 0
+fornow2 = 0
+fornow3 = 0
+fornow4 = 0
+if number_of_pizzas>10 and number_of_pizzas<50:
     st.write("Oh...wow- thats a lot of pizzas.")
+if number_of_pizzas>50:
+    st.write("Excuse me?")
 
+#initialize
+toppingsname = {0:"Margherita", 1:"Pepperoni", 2:"Olive", 3:"Double Cheese", 4:"Chicken", 5:"Pineapple"}
+toppingsprice = {0:0, 1:3, 2:2, 3:4, 4:6, 5:2}
+choiceslist = []
+extracostlist = []
 cost_per_pizza = 3
+toppingschoice = 0
 
-#toppings
-toppings = ["Pepperoni", "Olives", "Double Cheese", "Chicken", "Pineapple"]
-toppingsprice = [3, 2, 4, 6, 2]
+number_of_toppings = st.number_input("How many toppings would you like? Take a look at our toppings menu and choose from 0-5!", min_value=0, max_value=5, step=1)
+if number_of_pizzas==0:
+    st.write("um...you want plain toppings?")
 
-toppingschoice = st.number_input("Would you like a topping? If so, select from 1-5. If you do not want a topping, proceed to the bill.", step=1)
+for x in range(0, number_of_toppings, 1):
+    toppingschoice = st.number_input(f"Choose your topping from the menu, from 1-5 (Topping {x+1}).", min_value=1, max_value=5, step=1)
+    choiceslist.append(toppingsname.get(toppingschoice))
+    extracostlist.append(toppingsprice.get(toppingschoice))
+    
 
-extracost = 0
-if toppingschoice ==  1 :
-    extracost = toppingsprice[0]
-    st.write("valley girl in the restaurant: its okay to be basic, i literally could never though.")
-if toppingschoice ==  2 :
-    extracost = toppingsprice[1]
-    st.write("college student waiter: underrated tbh.")
-if toppingschoice ==  3 :
-    extracost = toppingsprice[2]
-    st.write("judgy teenager in the restaurant: you are 5 years old.")
-if toppingschoice == 4 :
-    extracost = toppingsprice[3]
-    st.write("14 year old boy in the restaurant: lowkey my fav pizza is a good bbq chicken pizza ngl.")
-if toppingschoice == 5 :
-    extracost = toppingsprice[4]
-    st.write("hippie waiter: PINEAPPLE IS SUCH A GOOD TOPPING, I DONT CARE WHAT ANYONE SAYS, BYGODISWEARTHATTHESWEETMAKESTHESAVOUR- *nervous breakdown*")
-if toppingschoice == 0:
-    extracost = 0
-if toppingschoice != 0 and toppingschoice != 1 and toppingschoice != 2 and toppingschoice != 3 and toppingschoice != 4 and toppingschoice != 5:
-     st.write("Our waiter is very confused. Can you read?")
+
+#addcommentsdict
+emptylist = []
+for x in choiceslist:
+    if x not in emptylist:
+        emptylist.append(x)
 
 #bill
+choices = ' '.join(emptylist)
+if number_of_pizzas>1:
+    st.write(number_of_pizzas, choices ," Pizzas coming right up!")
+if number_of_pizzas==1 and number_of_toppings>=1:
+    st.write(number_of_pizzas, choices ," Pizza coming right up!")
 
-if number_of_pizzas!=0:
-    if toppingschoice ==  0 and number_of_pizzas == 1:
-        st.write(number_of_pizzas, " Margherita Pizza coming right up!...")
-    if toppingschoice ==  1 and number_of_pizzas == 1:
-        st.write(number_of_pizzas, " Pepperoni Pizza coming right up!...")
-    if toppingschoice ==  2 and number_of_pizzas == 1:
-        st.write(number_of_pizzas, " Olive-Topped Pizza coming right up!...")
-    if toppingschoice ==  3 and number_of_pizzas == 1:
-        st.write(number_of_pizzas, " Double-Cheese Pizza coming right up!...")
-    if toppingschoice ==  4 and number_of_pizzas == 1:
-        st.write(number_of_pizzas, " Barbeque Chicken Pizza coming right up!...")
-    if toppingschoice ==  5 and number_of_pizzas == 1:
-        st.write(number_of_pizzas, " Pineapple Pizza coming right up!...")
+if number_of_toppings==0 and number_of_pizzas>1:
+    st.write(number_of_pizzas, " Margherita Pizzas coming right up!")
+if number_of_toppings==0 and number_of_pizzas==1:
+    st.write(number_of_pizzas, " Margherita Pizza coming right up!")
 
-    if toppingschoice ==  0 and number_of_pizzas>1:
-        st.write(number_of_pizzas, " Margherita Pizzas coming right up!...")
-    if toppingschoice ==  1 and number_of_pizzas>1:
-        st.write(number_of_pizzas, " Pepperoni Pizzas coming right up!...")
-    if toppingschoice ==  2 and number_of_pizzas>1:
-         st.write(number_of_pizzas, " Olive-Topped Pizzas coming right up!...")
-    if toppingschoice ==  3 and number_of_pizzas>1:
-        st.write(number_of_pizzas, " Double-Cheese Pizzas coming right up!...")
-    if toppingschoice ==  4 and number_of_pizzas>1:
-        st.write(number_of_pizzas, " Barbeque Chicken Pizzas coming right up!...")
-    if toppingschoice ==  5 and number_of_pizzas>1:
-        st.write(number_of_pizzas, " Pineapple Pizzas coming right up!...")
 
-    st.subheader("Your Bill :money_with_wings:")
-    st.write("--->Base Pizza Price: 3")
-    if toppingschoice == 1:
-        st.write("--->Topping: Pepperoni, Price: 3")
-    if toppingschoice == 2:
-        st.write("--->Topping: Olives, Price: 2")
-    if toppingschoice == 3:
-        st.write("--->Topping: Double Cheese, Price: 4")
-    if toppingschoice == 4:
-        st.write("--->Topping: Chicken, Price: 6")
-    if toppingschoice == 5:
-        st.write("--->Topping: Pineapple, Price: 2")
-    if toppingschoice == 0:
-        st.write("--->Topping: N/A, Price: N/A")
-    
-    if toppingschoice!=0:
-        st.write("--->Total Base Price: ", cost_per_pizza + extracost)
-        st.write("--->Quantity: ", number_of_pizzas)
+st.subheader("Your Bill :money_with_wings:")
+st.write("--->Base Pizza Price: 3")
+for x in range(len(choiceslist)):
+    st.write("--->Topping: ", choiceslist[x], ", Price: ", extracostlist[x])
+extracost =0
+for x in range(len(extracostlist)):
+    extracost = extracost + extracostlist[x]
 
-    if toppingschoice != 0:
-        subtotal = number_of_pizzas * (cost_per_pizza + extracost)
-        st.write("Subtotal: ", subtotal)
-        tax_rate = 0.08
-        sales_tax = subtotal * tax_rate
-        total = subtotal + sales_tax
-        fornow3 =  st.write("Total (including tax): ", total)
-        fornow4 = st.write("This includes ", subtotal, " coins for the food and  ", sales_tax, " coins in sales tax.")
+if toppingschoice!=0:
+    st.write("--->Total Base Price: ", cost_per_pizza + extracost)
+    st.write("--->Quantity: ", number_of_pizzas)
 
-    if toppingschoice == 0:
-        fornow1 = st.write("The cost before tax is: ", number_of_pizzas * cost_per_pizza)
-        fornow2 = st.write("The total cost is ", (number_of_pizzas * cost_per_pizza)+ ((number_of_pizzas * cost_per_pizza) * 0.08))
+if toppingschoice != 0:
+    subtotal = number_of_pizzas * (cost_per_pizza + extracost)
+    st.write("Subtotal: ", subtotal)
+    tax_rate = 0.08
+    sales_tax = subtotal * tax_rate
+    total = subtotal + sales_tax
+    fornow3 =  st.write("Total (including tax): ", total)
+    fornow4 = st.write("This includes ", subtotal, " coins for the food and  ", sales_tax, " coins in sales tax.")
+
+if toppingschoice == 0:
+    fornow1 = st.write("The cost before tax is: ", number_of_pizzas * cost_per_pizza)
+    fornow2 = st.write("The total cost is ", (number_of_pizzas * cost_per_pizza)+ ((number_of_pizzas * cost_per_pizza) * 0.08))
+
+
+
+
 
     

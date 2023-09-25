@@ -16,7 +16,7 @@ st.write("(5) Pineapple costs 2 coins.")
 st.header("Place Your Order")
 
 #base pizza
-number_of_pizzas  = st.number_input("How many pizzas do you want?")
+number_of_pizzas  = st.number_input("How many pizzas do you want?", step=1)
 if number_of_pizzas<0:
     st.write("You want...less than 1 pizza-? A negative pizza? STOP TORMENTING OUR WAITERS!")
     fornow1 = 0
@@ -34,7 +34,7 @@ cost_per_pizza = 3
 toppings = ["Pepperoni", "Olives", "Double Cheese", "Chicken", "Pineapple"]
 toppingsprice = [3, 2, 4, 6, 2]
 
-toppingschoice = st.number_input("Would you like a topping? If so, select from 1-5. If you do not want a topping, proceed to the bill.")
+toppingschoice = st.number_input("Would you like a topping? If so, select from 1-5. If you do not want a topping, proceed to the bill.", step=1)
 
 extracost = 0
 if toppingschoice ==  1 :

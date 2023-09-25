@@ -1,7 +1,7 @@
 import streamlit as st
 
 #page config
-
+st.write(:cow:)
 st.set_page_config(page_title="Pizza Bakery", page_icon = ":pizza:")
 st.title("Papa's Pizzeria - Walmart Edition")
 st.header("Menu || Plain Pizzas cost 3 coins.")
